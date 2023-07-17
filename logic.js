@@ -241,8 +241,8 @@ async function checkSecuencia(e){
         contador++;
     
         if (contador == secuenciaPrincipal.length){
-          await delay(1000);
           estado = false;
+          await delay(1000);
           tituloPuntaje.textContent = "Puntaje: " + contador;
           tiempo += 0.5;
           playAgain();
@@ -295,26 +295,21 @@ function perdiste(){
 
 
 async function tiempoDisponible(){
+
   var tiempoDisponible = tiempo;
 
-  for(var i = 0 ; i <= tiempo; i++){
+  while(tiempoDisponible >= 0 && estado){
+    
+    tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
+    await delay(1000);
 
-    if(estado && tiempoDisponible > 0){
-
-      tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
-      await delay(1000);
-
-      if(!estado){
-        return;
-      }
-      tiempoDisponible = tiempoDisponible - 1;
-    }
-    else{
+    if(!estado){
       return;
     }
-
+    tiempoDisponible = tiempoDisponible - 1;
   }
-  if(estado && tiempoDisponible == 0){
+
+  if(estado){
     tituloTiempo.textContent = 'Tiempo: 0 ';
     perdiste();
   }
