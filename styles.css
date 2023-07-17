@@ -7,6 +7,7 @@
 html{
   color:black;
   font-family: sans-serif;
+  background-color: rgb(231, 231, 231);
 }
 
 header{
@@ -34,9 +35,49 @@ header{
   
 }
 
+h1{
+  font-size: 30px;
+  text-align: center;
+  color: #ff6122;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 20px;
+}
+
+#play {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 400px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#play:hover {
+  background-color: #45a049;
+}
+
 .contenedor{
   align-items: center;
 }
+
+.estado{
+  width: 400px;
+
+}
+
+.estado div{
+  border-radius: 5px;
+  width: 200px;
+  background-color: #ff6122;
+  text-align: center;
+}
+
 
 .primary{
   display: flex;
@@ -45,14 +86,15 @@ header{
   margin-top: 10px;
   width: 400px;
   height: 400px;
+  background-color: rgb(48, 46, 46);
+  border-radius: 15px;
 }
 
 .primary div{
   width: 100%;
-
-
-
-  border: 4px solid rgb(48, 46, 46);;
+  border-radius: 15px;
+  border: 4px solid rgb(48, 46, 46);
+  cursor: pointer;
 }
 
 .secondary{
@@ -61,18 +103,18 @@ header{
 }
 
 #red{
-  background-color: red;
+  background-color: rgb(100, 0, 0);
   
 }
 
 #yellow{
-  background-color: yellow;
+  background-color: rgb(204, 204, 0);
 }
 
 #green{
-  background-color: green;
+  background-color: rgb(0, 80, 0);
 }
 
 #blue{
-  background-color: blue;
+  background-color: rgb(0, 0, 100);
 }
