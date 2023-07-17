@@ -299,19 +299,25 @@ async function tiempoDisponible(){
 
   for(var i = 0 ; i <= tiempo; i++){
 
-    if(estado){
+    if(estado && tiempoDisponible > 0){
 
       tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
       await delay(1000);
+
+      if(!estado){
+        return;
+      }
       tiempoDisponible = tiempoDisponible - 1;
     }
     else{
       return;
-    } 
-  }
+    }
 
-  tituloTiempo.textContent = 'Tiempo: 0 ';
-  perdiste();
+  }
+  if(estado && tiempoDisponible == 0){
+    tituloTiempo.textContent = 'Tiempo: 0 ';
+    perdiste();
+  }
 }
 
 
