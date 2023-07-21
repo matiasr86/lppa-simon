@@ -31,6 +31,7 @@ var contador = 0;
 var estado = false;
 var nuevoJuego = true;
 var tiempo = 3;
+var temporizador;
 
 function restablecerVariables(){
   perdisteDiv.remove();
@@ -69,7 +70,7 @@ function obtenerNumeroAleatorio() {
 
 // Eventos 
 var buttonPlay = document.getElementById("play");
-buttonPlay.addEventListener('click', play);
+buttonPlay.addEventListener('click', start);
 
 
 red.addEventListener('click', checkSecuencia);
@@ -78,35 +79,18 @@ yellow.addEventListener('click', checkSecuencia);
 green.addEventListener('click', checkSecuencia);
 
 
-async function play(e){
+function start(e){
   // Para evitar que recargue la pagina
   e.preventDefault();
-
-  tituloTiempo.textContent = 'Recordar...';
-
   if(nuevoJuego){
     restablecerVariables();
   }
 
-  //llamo al metodo para generar un numero aleatorio de 1 al 4 y agregarlo al array de la secuencia
-  var numAleatorio = obtenerNumeroAleatorio();
-  secuenciaPrincipal.push(numAleatorio);
+  play();
 
-  console.log(secuenciaPrincipal)
-
-  for(var i = 0; i<= secuenciaPrincipal.length; i++){
-    await delay(1000);
-    var espera = (i * 1000);
-    ejecutar(secuenciaPrincipal[i], espera);
-  }
-  contador = 0;
-  estado = true;
-  await delay(1500);
-  tiempoDisponible();
-  
 }
 
-async function playAgain(){
+function play(){
   tituloTiempo.textContent = 'Recordar...';
   var numAleatorio = obtenerNumeroAleatorio();
   secuenciaPrincipal.push(numAleatorio);
@@ -114,14 +98,18 @@ async function playAgain(){
   console.log(secuenciaPrincipal)
 
   for(var i = 0; i<= secuenciaPrincipal.length; i++){
-    await delay(1000);
-    var espera = (i * 1000);
+    //await delay(1000);
+    var espera = (i * 1500);
     ejecutar(secuenciaPrincipal[i], espera);
   }
   contador=0;
   estado = true;
-  await delay(espera);
-  tiempoDisponible();
+  //await delay(espera);
+
+  setTimeout(function(){
+    tiempoDisponible();
+  }, espera);
+
   
 }
 
@@ -132,49 +120,68 @@ function delay(ms) {
 }
 
 
-async function ejecutar(num, seg) {
-  await delay(seg); // Esperar x segundos
-  cambioColor(num)
+function ejecutar(num, seg) {
+  //await delay(seg); // Esperar x segundos
+  setTimeout(function(){
+    cambioColor(num);
+
+  }, seg);
+  //setTimeout(cambioColor(num), 10000);
+  //cambioColor(num)
 }
 
-async function cambioColor(num){
+function cambioColor(num){
   console.log("Cambio color");
   switch (num) {
     case 1:
       // Código a ejecutar si opcion es igual a 1
       red.style.backgroundColor = "red";
       red.style.border = '4px solid white';
-      await delay(500);
-      restablecer();
+      //await delay(500);
+      setTimeout(function(){
+        restablecer()
+      }, 1000);
+      //setTimeout(restablecer(), 1000);
       break;
 
     case 2:
       // Código a ejecutar si opcion es igual a 2
       blue.style.backgroundColor = "blue";
       blue.style.border = '4px solid white';
-      await delay(500);
-      restablecer();
+      //await delay(500);
+      setTimeout(function(){
+        restablecer()
+      }, 1000);
+      //setTimeout(restablecer(), 1000);
       break;
 
     case 3:
       // Código a ejecutar si opcion es igual a 3
       yellow.style.backgroundColor = 'rgb(255, 255, 0)';
       yellow.style.border = '4px solid white';
-      await delay(500);
-      restablecer();
+      //await delay(500);
+      setTimeout(function(){
+        restablecer()
+      }, 1000);
+      //setTimeout(restablecer(), 1000);
       break;
 
     case 4:
       green.style.backgroundColor = 'rgb(0, 255, 0)';
       green.style.border = '4px solid white';
-      await delay(500);
-      restablecer();
+      //await delay(500);
+      setTimeout(function(){
+        restablecer()
+      }, 1000);
+      //setTimeout(restablecer(), 1000);
       break;
   }
 }
 
-async function restablecer(){
-  await delay(500);
+
+function restablecer(){
+  console.log("Reestablecer");
+  //await delay(500);
   red.style.backgroundColor = 'rgb(100, 0, 0)';
   red.style.border = '4px solid rgb(48, 46, 46)';
 
@@ -242,10 +249,14 @@ async function checkSecuencia(e){
     
         if (contador == secuenciaPrincipal.length){
           estado = false;
+          clearTimeout(temporizador);
           await delay(1000);
           tituloPuntaje.textContent = "Puntaje: " + contador;
           tiempo += 0.5;
-          playAgain();
+          setTimeout(function(){
+            play();
+          },500);
+          
         }
 
       }
@@ -294,25 +305,46 @@ function perdiste(){
 }
 
 
-async function tiempoDisponible(){
+
+
+function tiempoDisponible(){
 
   var tiempoDisponible = tiempo;
+  var tiempoDisponibleWhile = tiempo;
+  var segundos = 1000;
+  tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
 
-  while(tiempoDisponible >= 0 && estado){
+  
+  while(tiempoDisponibleWhile >= 0){
     
-    tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
-    await delay(1000);
+    temporizador = setTimeout(function(){
+      console.log("set time while")
+      tiempoDisponible = tiempoDisponible - 1;
+    
+      if(!estado){
+        
+        return;
+      }else{
+        tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
 
-    if(!estado){
-      return;
-    }
-    tiempoDisponible = tiempoDisponible - 1;
+      }
+
+      if(tiempoDisponible <= 0 && estado){
+        tituloTiempo.textContent = 'Tiempo: 0';
+        if(estado){
+          perdiste();
+        }
+      }
+
+    },segundos);
+
+    tiempoDisponibleWhile = tiempoDisponibleWhile - 1;
+    segundos = segundos + 1000;
+
   }
 
-  if(estado){
-    tituloTiempo.textContent = 'Tiempo: 0 ';
-    perdiste();
-  }
+
+
 }
 
 
