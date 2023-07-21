@@ -250,12 +250,12 @@ async function checkSecuencia(e){
         if (contador == secuenciaPrincipal.length){
           estado = false;
           clearTimeout(temporizador);
-          await delay(1000);
+          //await delay(1000);
           tituloPuntaje.textContent = "Puntaje: " + contador;
           tiempo += 0.5;
           setTimeout(function(){
             play();
-          },500);
+          },1000);
           
         }
 
@@ -314,35 +314,23 @@ function tiempoDisponible(){
   var segundos = 1000;
   tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
 
-  
-  while(tiempoDisponibleWhile >= 0){
-    
-    temporizador = setTimeout(function(){
-      console.log("set time while")
-      tiempoDisponible = tiempoDisponible - 1;
-    
-      if(!estado){
-        
-        return;
-      }else{
-        tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
+  setTimeout(function(){
 
-      }
+    temporizador;
 
-      if(tiempoDisponible <= 0 && estado){
-        tituloTiempo.textContent = 'Tiempo: 0';
-        if(estado){
-          perdiste();
-        }
-      }
+  },1000);
 
-    },segundos);
-
-    tiempoDisponibleWhile = tiempoDisponibleWhile - 1;
-    segundos = segundos + 1000;
-
-  }
-
+  temporizador = setInterval(function(){
+    tiempoDisponible = tiempoDisponible - 1;
+    tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
+    console.log("set time while")
+    if(tiempoDisponible <= 0 && estado){
+      tituloTiempo.textContent = 'Tiempo: 0';
+      perdiste();
+      clearInterval(temporizador);
+      return;
+    }
+  }, 1000);
 
 
 }
