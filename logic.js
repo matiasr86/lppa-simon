@@ -5,6 +5,7 @@
 
 var red = document.getElementById("red");
 var blue = document.getElementById("blue");
+
 var yellow = document.getElementById("yellow");
 var green = document.getElementById("green");
 var contenedorDiv = document.querySelector('.contenedor');
@@ -196,7 +197,7 @@ function restablecer(){
 
 }
 
-async function checkSecuencia(e){
+function checkSecuencia(e){
     // Para evitar que recargue la pagina
     e.preventDefault();
     if(!estado){
@@ -209,35 +210,47 @@ async function checkSecuencia(e){
         color = 1;
         red.style.backgroundColor = "red";
         red.style.border = '4px solid white';
-        await delay(100);
-        red.style.backgroundColor = 'rgb(100, 0, 0)';
-        red.style.border = '4px solid rgb(48, 46, 46)';
+        //await delay(100);
+        setTimeout(function(){
+          restablecer();
+        },100);
+/*         red.style.backgroundColor = 'rgb(100, 0, 0)';
+        red.style.border = '4px solid rgb(48, 46, 46)'; */
         
       };
       if(divId == "blue"){
         color = 2;
         blue.style.backgroundColor = "blue";
         blue.style.border = '4px solid white';
-        await delay(100);
-        blue.style.backgroundColor = 'rgb(0, 0, 100)';
-        blue.style.border = '4px solid rgb(48, 46, 46)';
+        //await delay(100);
+        setTimeout(function(){
+          restablecer();
+        },100);
+/*         blue.style.backgroundColor = 'rgb(0, 0, 100)';
+        blue.style.border = '4px solid rgb(48, 46, 46)'; */
 
       };
       if(divId == "yellow"){
         color = 3;
         yellow.style.backgroundColor = 'rgb(255, 255, 0)';
         yellow.style.border = '4px solid white';
-        await delay(100);
-        yellow.style.backgroundColor = 'rgb(204, 204, 0)';
-        yellow.style.border = '4px solid rgb(48, 46, 46)';
+        //await delay(100);
+        setTimeout(function(){
+          restablecer();
+        },100);
+/*         yellow.style.backgroundColor = 'rgb(204, 204, 0)';
+        yellow.style.border = '4px solid rgb(48, 46, 46)'; */
       };
       if(divId == "green"){
         color = 4;
         green.style.backgroundColor = 'rgb(0, 255, 0)';
         green.style.border = '4px solid white';
-        await delay(100);
-        green.style.backgroundColor = 'rgb(0, 80, 0)';
-        green.style.border = '4px solid rgb(48, 46, 46)';
+        //await delay(100);
+        setTimeout(function(){
+          restablecer();
+        },100);
+/*         green.style.backgroundColor = 'rgb(0, 80, 0)';
+        green.style.border = '4px solid rgb(48, 46, 46)'; */
       }; 
   
 
@@ -267,6 +280,7 @@ async function checkSecuencia(e){
 
 
 function perdiste(){
+  clearInterval(temporizador);
 
   red.style.backgroundColor = "black";
   blue.style.backgroundColor = "black";
@@ -327,7 +341,7 @@ function tiempoDisponible(){
     if(tiempoDisponible <= 0 && estado){
       tituloTiempo.textContent = 'Tiempo: 0';
       perdiste();
-      clearInterval(temporizador);
+      //clearInterval(temporizador);
       return;
     }
   }, 1000);
