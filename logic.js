@@ -27,35 +27,44 @@ console.log(tituloTiempo.textContent)
 
 var secuenciaPrincipal = [];
 var secuenciaJugador = [];
-var puntaje = 0;
+var nombreJugador;
+var nombre= false;
+var nivel = 0;
+var puntaje= 0;
 var contador = 0;
 var estado = false;
 var nuevoJuego = true;
 var tiempo = 3;
+var tiempoAcumulado = 3;
 var temporizador;
+var timeEnableplay= 0;
+var tiempoUtilizado = 0;
 
 function restablecerVariables(){
   perdisteDiv.remove();
-  tituloPuntaje.textContent = "Puntaje: 0";
+  tituloPuntaje.textContent = "Nivel: 0";
   secuenciaPrincipal = [];
   secuenciaJugador = [];
   puntaje = 0;
+  nivel= 0;
   contador = 0;
   estado = false;
   nuevoJuejo = false;
   tiempo = 3;
+  tiempoAcumulado = 3;
+  tiempoUtilizado = 0;
 
   red.style.backgroundColor = 'rgb(100, 0, 0)';
-  red.style.border = '4px solid rgb(48, 46, 46)';
+  red.style.border = '8px solid rgb(48, 46, 46)';
 
   blue.style.backgroundColor = 'rgb(0, 0, 100)';
-  blue.style.border = '4px solid rgb(48, 46, 46)';
+  blue.style.border = '8px solid rgb(48, 46, 46)';
 
   yellow.style.backgroundColor = 'rgb(204, 204, 0)';
-  yellow.style.border = '4px solid rgb(48, 46, 46)';
+  yellow.style.border = '8px solid rgb(48, 46, 46)';
 
   green.style.backgroundColor = 'rgb(0, 80, 0)';
-  green.style.border = '4px solid rgb(48, 46, 46)';
+  green.style.border = '8px solid rgb(48, 46, 46)';
   
 }
 
@@ -87,8 +96,10 @@ function start(e){
     restablecerVariables();
   }
 
-  play();
-
+  console.log(nombre);
+  if(nombre){
+    play();
+  }
 }
 
 function play(){
@@ -116,9 +127,9 @@ function play(){
 
 
 
-function delay(ms) {
+/* function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
-}
+} */
 
 
 function ejecutar(num, seg) {
@@ -184,16 +195,16 @@ function restablecer(){
   console.log("Reestablecer");
   //await delay(500);
   red.style.backgroundColor = 'rgb(100, 0, 0)';
-  red.style.border = '4px solid rgb(48, 46, 46)';
+  red.style.border = '8px solid rgb(48, 46, 46)';
 
   blue.style.backgroundColor = 'rgb(0, 0, 100)';
-  blue.style.border = '4px solid rgb(48, 46, 46)';
+  blue.style.border = '8px solid rgb(48, 46, 46)';
 
   yellow.style.backgroundColor = 'rgb(204, 204, 0)';
-  yellow.style.border = '4px solid rgb(48, 46, 46)';
+  yellow.style.border = '8px solid rgb(48, 46, 46)';
 
   green.style.backgroundColor = 'rgb(0, 80, 0)';
-  green.style.border = '4px solid rgb(48, 46, 46)';
+  green.style.border = '8px solid rgb(48, 46, 46)';
 
 }
 
@@ -261,11 +272,14 @@ function checkSecuencia(e){
         contador++;
     
         if (contador == secuenciaPrincipal.length){
+          tiempoUtilizado = tiempoUtilizado + (tiempo - timeEnableplay);
+          nivel +=1;
           estado = false;
           clearTimeout(temporizador);
           //await delay(1000);
-          tituloPuntaje.textContent = "Puntaje: " + contador;
+          tituloPuntaje.textContent = "Nivel: " + contador;
           tiempo += 0.5;
+          tiempoAcumulado += tiempo;
           setTimeout(function(){
             play();
           },1000);
@@ -281,6 +295,10 @@ function checkSecuencia(e){
 
 function perdiste(){
   clearInterval(temporizador);
+  puntaje = nivel - (tiempoAcumulado - tiempoUtilizado)/100;
+  var fechaActual = new Date().toISOString().slice(0, 10);
+  agregarFila(fechaActual, nombreJugador, puntaje);
+
 
   red.style.backgroundColor = "black";
   blue.style.backgroundColor = "black";
@@ -299,7 +317,7 @@ function perdiste(){
   perdisteDiv.style.textAlign = 'center';
   perdisteDiv.style.marginTop = '5px';
   perdisteDiv.style.marginBottom = '5px';
-  perdisteDiv.style.width = '400px';
+  perdisteDiv.style.width = '350px';
   perdisteDiv.style.borderRadius = '5px';
 
   // Crear el elemento <p> dentro del <div>
@@ -323,10 +341,10 @@ function perdiste(){
 
 function tiempoDisponible(){
 
-  var tiempoDisponible = tiempo;
+  timeEnableplay = tiempo;
   var tiempoDisponibleWhile = tiempo;
   var segundos = 1000;
-  tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
+  tituloTiempo.textContent = 'Tiempo: ' + timeEnableplay;
 
   setTimeout(function(){
 
@@ -335,19 +353,117 @@ function tiempoDisponible(){
   },1000);
 
   temporizador = setInterval(function(){
-    tiempoDisponible = tiempoDisponible - 1;
-    tituloTiempo.textContent = 'Tiempo: ' + tiempoDisponible;
+    timeEnableplay = timeEnableplay - 0.1;
+    tituloTiempo.textContent = 'Tiempo: ' + timeEnableplay.toFixed(2);
     console.log("set time while")
-    if(tiempoDisponible <= 0 && estado){
+    if(timeEnableplay <= 0 && estado){
       tituloTiempo.textContent = 'Tiempo: 0';
+      tiempoUtilizado = tiempoUtilizado + (tiempo - timeEnableplay);
       perdiste();
       //clearInterval(temporizador);
       return;
     }
-  }, 1000);
+  }, 100);
 
 
 }
 
+
+// Cargar Ranking
+
+// Obtenemos una referencia a la tabla
+var table = document.getElementById("my-table");
+
+// Creamos una función para agregar una fila a la tabla
+function agregarFila(fecha, jugador, puntaje) {
+  var row = document.createElement("tr");
+
+  var celda1 = document.createElement("td");
+  celda1.textContent = fecha;
+  celda1.style.textAlign = "center"
+  row.appendChild(celda1);
+
+  var celda2 = document.createElement("td");
+  celda2.textContent = jugador;
+  row.appendChild(celda2);
+
+  var celda3 = document.createElement("td");
+  celda3.textContent = puntaje.toFixed(2);
+  celda3.style.textAlign = "center"
+  row.appendChild(celda3);
+
+  table.querySelector("tbody").appendChild(row);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Validaciones
+
+// Validar el nombre
+var inputName = document.getElementById('nombre');
+var divName = inputName.parentNode;
+console.log(divName);
+
+// Eventos
+inputName.addEventListener('blur', validarNombre)
+inputName.addEventListener('focus', limpiarMensaje)
+
+function validarNombre(e){
+  var textoIngresado = e.target.value;
+  if(textoIngresado != ""){
+    
+    if(textoIngresado.length < 7 || textoIngresado.indexOf(" ") == -1 ){
+      
+      var spanNameNo = document.createElement(`span`);
+    
+      spanNameNo.textContent = '❌'
+      spanNameNo.style.color = `red`;
+      spanNameNo.style.fontSize = `11px`;
+      spanNameNo.style.display = `block`;
+      divName.insertBefore(spanNameNo, divName.children[2]);
+      nombre = false;
+    }
+    else{
+  
+      nombreJugador = inputName.value;
+      var spanNameOk = document.createElement(`span`);
+      spanNameOk.textContent = `✅Ok`;
+      spanNameOk.style.color = `green`;
+      spanNameOk.style.fontSize = `12px`;
+      spanNameOk.style.display = `block`;
+      divName.insertBefore(spanNameOk, divName.children[2]);
+      nombre = true;
+    }
+
+  }
+  else{
+    nombre = false;
+  }
+}
+
+
+// Funcion para limpiar todos los mensajes de validación una vez el usuario vuelve a editar el input
+
+function limpiarMensaje(e){
+  var elementEvent = e.target;
+  var divParenElement = elementEvent.parentNode; 
+
+  var span = divParenElement.children[2];
+  if(span.tagName === `SPAN`){
+
+    divParenElement.removeChild(span);
+  }
+
+}
 
 
