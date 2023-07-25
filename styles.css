@@ -6,7 +6,7 @@
 
 html{
   color:white;
-  font-family: sans-serif;
+  font-family: monospace;
   background-color: rgb(48, 46, 46);
 }
 
@@ -35,6 +35,8 @@ a{
   flex-direction: column;
   
 }
+
+
 
 .row-wrap{
   display: flex;
@@ -69,6 +71,10 @@ h3{
 
 .menu h4{
   margin-left: 30px;
+}
+
+button{
+  font-family: monospace;
 }
 
 #play {

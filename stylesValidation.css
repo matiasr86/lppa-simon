@@ -1,14 +1,19 @@
+label{
+  color: greenyellow;
+}
 
 .sec-form{
   display: flex;
   width: 100%;
   padding: 10px;
   align-content: center;
+  text-align: center;
 }
 
-.sec-form h3{
-
-  font-size: 30px;
+.sec-form h2{
+  padding-left: 25px;
+  padding-right: 25px;
+  font-size: 25px;
   margin-block-start: 0;
   margin-block-end: 2px;
 }
@@ -20,11 +25,23 @@
 
 .userData{
   padding: 10px;
-  width: 50%;
+  width: 40%;
 }
 
 .userData input{
   width: 100%;
+}
+
+.message{
+  width: 80%;
+  padding: 10px;
+}
+
+textarea{
+  font-size: 20px;
+  width: 100%;
+  padding: 10px;
+  border: 2px solid orange;
 }
 
 .send{
@@ -34,9 +51,13 @@
 }
 
 button{
-  font-size: large;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: bold;
   background-color: orange;
-  width: 100%;
+  color: white;
+  width: 50%;
+  height: auto;
 }
 
 
@@ -49,9 +70,13 @@ button{
 
   }
 
-  button{
+  .message{
+    width:380px;
 
-    width: 380px;
+  }
+
+  .send{
+
   }
 
   }
