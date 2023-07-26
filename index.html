@@ -20,70 +20,51 @@
   <main>
     <div class="column-wrap contenedor">
       
-      <div class="row-wrap play-area">
+      <div class="column-wrap juego">
+        <label for="nombre">Ingrese su nombre completo</label>
+        <input type="text" id="nombre">
 
-        <div class="column-wrap juego">
-          <label for="nombre">Ingrese su nombre completo</label>
-          <input type="text" id="nombre">
-
+        <div>
+          <button id="play">JUGAR</button>
+        </div>
+  
+        <div class="row-nowrap estado">
           <div>
-            <button id="play">JUGAR</button>
+            <h2>Nivel: 0</h2>
           </div>
-    
-          <div class="row-nowrap estado">
-            <div>
-              <h2>Nivel: 0</h2>
-            </div>
-    
-            <div>
-              <h2>Tiempo: 0</h2>
-            </div>
-    
+  
+          <div>
+            <h2>Tiempo: 0</h2>
           </div>
-    
-    
-          <div class="column-wrap  primary">
-            <div class="row-nowrap secondary">
-              <div id="red">
-    
-              </div>
-        
-              <div id="blue">
-    
-              </div>
-            </div>
-    
-            <div class="row-nowrap secondary">
-              <div id="yellow">
-    
-              </div>
-        
-              <div id="green">
-    
-              </div>
+  
+        </div>
+  
+  
+        <div class="column-wrap  primary">
+          <div class="row-nowrap secondary">
+            <div id="red">
+  
             </div>
       
+            <div id="blue">
+  
+            </div>
           </div>
-
+  
+          <div class="row-nowrap secondary">
+            <div id="yellow">
+  
+            </div>
+      
+            <div id="green">
+  
+            </div>
+          </div>
+    
         </div>
 
-        <div class="column-wrap ranking">
-          <div>
-            <h2>Ranking - Top 10</h2>
-          </div>
-
-          <table id="my-table">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Jugador</th>
-                <th>Puntuación</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Aquí se agregarán las filas dinámicamente con JavaScript -->
-            </tbody>
-          </table>
+        <div class="row-nowrap">
+          <a href="./ranking.html"><button>Ranking - Top 10</button></a>
         </div>
 
       </div>
