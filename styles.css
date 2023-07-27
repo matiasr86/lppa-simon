@@ -195,14 +195,35 @@ input{
   height: 50%; /* Ajusta la altura del div flotante */
   justify-content: center;
   align-items: center;
-  cursor: not-allowed; /* Cambia el cursor a "not-allowed" cuando pasa por encima (opcional) */
-  pointer-events: none;
 }
 
 .flotante a{
   color: greenyellow;
   font-size: 20px;
 }
+
+.modal {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: red;
+  padding: 20px;
+  z-index: 1;
+  border-radius: 5%; /* Establece el borde redondeado */
+  width: 80%; /* Ajusta el ancho del div flotante */
+  height: 40%; /* Ajusta la altura del div flotante */
+  justify-content: center;
+  align-items: center;
+  border: 4px solid white
+}
+
+.modal h2{
+  color: white;
+  font-size: 20px;
+}
+
 
 
 #ranking-button {

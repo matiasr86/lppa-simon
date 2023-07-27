@@ -1,3 +1,12 @@
+var flotanteDiv = document.querySelector('.flotante');
+console.log(flotanteDiv);
+flotanteDiv.style.cursor = "default";
+
+var reinicioLink = flotanteDiv.firstElementChild;
+
+
+
+
 // Rojo es el numero 1
 // Azul es el numero 2
 // Amarillo es el numero 3
@@ -5,17 +14,16 @@
 
 var red = document.getElementById("red");
 var blue = document.getElementById("blue");
-
 var yellow = document.getElementById("yellow");
 var green = document.getElementById("green");
+
 var contenedorDiv = document.querySelector('.contenedor');
-var buttonDiv = contenedorDiv.children[0];
-
+var playDiv = contenedorDiv.children[0];
 var estadoDiv = document.querySelector('.estado');
-
 var tiempoDiv = estadoDiv.children[1];
 var tituloTiempo = tiempoDiv.querySelector('h2');
 
+var modal = document.querySelector('.modal');
 var perdisteDiv = document.createElement('div');
 
 
@@ -37,10 +45,12 @@ var nuevoJuego = true;
 var tiempo = 3;
 var tiempoAcumulado = 3;
 var temporizador;
+var reset;
 var timeEnableplay= 0;
 var tiempoUtilizado = 0;
 
 function restablecerVariables(){
+  reinicioLink.textContent = "";
   perdisteDiv.remove();
   tituloPuntaje.textContent = "Nivel: 0";
   secuenciaPrincipal = [];
@@ -82,6 +92,7 @@ function obtenerNumeroAleatorio() {
 var buttonPlay = document.getElementById("play");
 buttonPlay.addEventListener('click', start);
 
+reinicioLink.addEventListener('click', start);
 
 red.addEventListener('click', checkSecuencia);
 blue.addEventListener('click', checkSecuencia);
@@ -96,9 +107,11 @@ function start(e){
     restablecerVariables();
   }
 
-  console.log(nombre);
+
   if(nombre){
+    buttonPlay.disabled = true;
     play();
+
   }
 }
 
@@ -143,6 +156,7 @@ function ejecutar(num, seg) {
 }
 
 function cambioColor(num){
+  
   console.log("Cambio color");
   switch (num) {
     case 1:
@@ -150,7 +164,7 @@ function cambioColor(num){
       red.style.backgroundColor = "red";
       red.style.border = '4px solid white';
       //await delay(500);
-      setTimeout(function(){
+      reset = setTimeout(function(){
         restablecer()
       }, 1000);
       //setTimeout(restablecer(), 1000);
@@ -161,7 +175,7 @@ function cambioColor(num){
       blue.style.backgroundColor = "blue";
       blue.style.border = '4px solid white';
       //await delay(500);
-      setTimeout(function(){
+      reset = setTimeout(function(){
         restablecer()
       }, 1000);
       //setTimeout(restablecer(), 1000);
@@ -172,7 +186,7 @@ function cambioColor(num){
       yellow.style.backgroundColor = 'rgb(255, 255, 0)';
       yellow.style.border = '4px solid white';
       //await delay(500);
-      setTimeout(function(){
+      reset = setTimeout(function(){
         restablecer()
       }, 1000);
       //setTimeout(restablecer(), 1000);
@@ -182,7 +196,7 @@ function cambioColor(num){
       green.style.backgroundColor = 'rgb(0, 255, 0)';
       green.style.border = '4px solid white';
       //await delay(500);
-      setTimeout(function(){
+      reset = setTimeout(function(){
         restablecer()
       }, 1000);
       //setTimeout(restablecer(), 1000);
@@ -194,18 +208,24 @@ function cambioColor(num){
 function restablecer(){
   console.log("Reestablecer");
   //await delay(500);
-  red.style.backgroundColor = 'rgb(100, 0, 0)';
-  red.style.border = '8px solid rgb(48, 46, 46)';
 
-  blue.style.backgroundColor = 'rgb(0, 0, 100)';
-  blue.style.border = '8px solid rgb(48, 46, 46)';
 
-  yellow.style.backgroundColor = 'rgb(204, 204, 0)';
-  yellow.style.border = '8px solid rgb(48, 46, 46)';
+    red.style.backgroundColor = 'rgb(100, 0, 0)';
+    red.style.border = '8px solid rgb(48, 46, 46)';
+    
+    blue.style.backgroundColor = 'rgb(0, 0, 100)';
+    blue.style.border = '8px solid rgb(48, 46, 46)';
+    
+    yellow.style.backgroundColor = 'rgb(204, 204, 0)';
+    yellow.style.border = '8px solid rgb(48, 46, 46)';
+    
+    green.style.backgroundColor = 'rgb(0, 80, 0)';
+    green.style.border = '8px solid rgb(48, 46, 46)';
+  
+  
 
-  green.style.backgroundColor = 'rgb(0, 80, 0)';
-  green.style.border = '8px solid rgb(48, 46, 46)';
 
+  
 }
 
 function checkSecuencia(e){
@@ -295,17 +315,24 @@ function checkSecuencia(e){
 
 function perdiste(){
   clearInterval(temporizador);
+  clearTimeout(reset);
   puntaje = nivel - (tiempoAcumulado - tiempoUtilizado)/100;
   var fechaActual = new Date().toISOString().slice(0, 10);
-  agregarFila(fechaActual, nombreJugador, puntaje);
+  //agregarFila(fechaActual, nombreJugador, puntaje);
+  reinicioLink.textContent = "Reiniciar";
+
+  setTimeout(function(){
+    console.log("Perdiste")
+    red.style.backgroundColor = "black";
+    blue.style.backgroundColor = "black";
+    yellow.style.backgroundColor = "black";
+    green.style.backgroundColor = "black";
+  },200);
 
 
-  red.style.backgroundColor = "black";
-  blue.style.backgroundColor = "black";
-  yellow.style.backgroundColor = "black";
-  green.style.backgroundColor = "black";
   estado = false;
   nuevoJuego = true;
+  modal.style.display = "block";
 
   perdisteDiv = document.createElement('div');
   
@@ -333,7 +360,7 @@ function perdiste(){
   perdisteDiv.appendChild(perdisteTexto);
 
   // Añadir el <div> al div padre
-  contenedorDiv.insertBefore(perdisteDiv, buttonDiv); 
+  contenedorDiv.insertBefore(perdisteDiv, playDiv); 
 }
 
 
@@ -465,5 +492,9 @@ function limpiarMensaje(e){
   }
 
 }
+
+
+
+
 
 
