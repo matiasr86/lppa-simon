@@ -21,14 +21,14 @@
   <main>
     <section class="column-wrap sec-form">
       <h2>Complete el siguiente formulario con sus datos</h2>
-      <form action="" >
+      <form action="mailto:matiasr86@hotmail.com" method="post" enctype="text/plain" >
         <div class="row-wrap form">
           <div class="userData">
               <div>
                 <label for="nombre">Nombre y Apellido</label>
               </div>
               <div>
-                <input type="text" id="nombre">
+                <input type="text" id="nombre" name="nombre" required >
               </div>
           </div>
 
@@ -37,22 +37,22 @@
               <label for="mail">E-mail</label>
             </div>
             <div>
-              <input type="text" id="mail">
+              <input type="text" id="email" name="email" required>
             </div>
           </div>
 
           <div class="message">
             <div>
-              <label for="mensaje">Mensaje</label>
+              <label for="message">Mensaje</label>
             </div>
             <div>
-              <textarea id="mensaje" rows="8" cols="50"></textarea></textarea>
+              <textarea id="message" name="message" rows="8" cols="50" required></textarea></textarea>
   
             </div>
           </div>
 
           <div class="send">
-            <a href="mailto:correo@example.com"><button type="submit">Enviar</button>
+            <button type="submit">Enviar</button>
             </a>
           </div>
 
@@ -68,8 +68,6 @@
     <h3>Tp Final Lppa - Matias Marinelli</h3>
   </footer>
   
-
-  <script src="./logic.js"></script>
   <script src="./validations.js"></script>
 </body>
 </html>

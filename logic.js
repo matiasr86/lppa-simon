@@ -2,7 +2,8 @@ var flotanteDiv = document.querySelector('.flotante');
 console.log(flotanteDiv);
 flotanteDiv.style.cursor = "default";
 
-var reinicioLink = flotanteDiv.firstElementChild;
+
+var buttonCloseModal = document.getElementById("close-modal");
 
 
 
@@ -18,7 +19,6 @@ var yellow = document.getElementById("yellow");
 var green = document.getElementById("green");
 
 var contenedorDiv = document.querySelector('.contenedor');
-var playDiv = contenedorDiv.children[0];
 var estadoDiv = document.querySelector('.estado');
 var tiempoDiv = estadoDiv.children[1];
 var tituloTiempo = tiempoDiv.querySelector('h2');
@@ -50,7 +50,6 @@ var timeEnableplay= 0;
 var tiempoUtilizado = 0;
 
 function restablecerVariables(){
-  reinicioLink.textContent = "";
   perdisteDiv.remove();
   tituloPuntaje.textContent = "Nivel: 0";
   secuenciaPrincipal = [];
@@ -92,7 +91,7 @@ function obtenerNumeroAleatorio() {
 var buttonPlay = document.getElementById("play");
 buttonPlay.addEventListener('click', start);
 
-reinicioLink.addEventListener('click', start);
+buttonCloseModal.addEventListener('click', closeModal);
 
 red.addEventListener('click', checkSecuencia);
 blue.addEventListener('click', checkSecuencia);
@@ -103,15 +102,22 @@ green.addEventListener('click', checkSecuencia);
 function start(e){
   // Para evitar que recargue la pagina
   e.preventDefault();
-  if(nuevoJuego){
-    restablecerVariables();
-  }
-
 
   if(nombre){
-    buttonPlay.disabled = true;
+    if(nuevoJuego){
+      restablecerVariables();
+    }
+    buttonPlay.style.display = "none";
     play();
-
+    
+  }else{
+    var spanNameNo = document.createElement(`span`);
+    spanNameNo.textContent = '❌ Debe escribir un nombre de al menos 3 caracteres';
+    spanNameNo.style.color = `red`;
+    spanNameNo.style.fontSize = `11px`;
+    spanNameNo.style.display = `block`;
+    divName.insertBefore(spanNameNo, divName.children[2]);
+    nombre = false;
   }
 }
 
@@ -319,7 +325,6 @@ function perdiste(){
   puntaje = nivel - (tiempoAcumulado - tiempoUtilizado)/100;
   var fechaActual = new Date().toISOString().slice(0, 10);
   //agregarFila(fechaActual, nombreJugador, puntaje);
-  reinicioLink.textContent = "Reiniciar";
 
   setTimeout(function(){
     console.log("Perdiste")
@@ -334,33 +339,6 @@ function perdiste(){
   nuevoJuego = true;
   modal.style.display = "block";
 
-  perdisteDiv = document.createElement('div');
-  
-
-
-  perdisteDiv.id = 'perdiste-div';
-  perdisteDiv.style.backgroundColor = '#ff5252';
-  perdisteDiv.style.padding = '10px';
-  perdisteDiv.style.textAlign = 'center';
-  perdisteDiv.style.marginTop = '5px';
-  perdisteDiv.style.marginBottom = '5px';
-  perdisteDiv.style.width = '350px';
-  perdisteDiv.style.borderRadius = '5px';
-
-  // Crear el elemento <p> dentro del <div>
-  var perdisteTexto = document.createElement('p');
-  perdisteTexto.textContent = 'Perdiste, no hay nadie peor que vos';
-  perdisteTexto.style.fontSize = '16px';
-  perdisteTexto.style.color = 'white';
-  perdisteTexto.style.margin = '0px';
-  perdisteTexto.style.textTransform = 'uppercase';
-  perdisteTexto.style.fontWeight = 'bold';
-
-  // Añadir el elemento <p> al <div>
-  perdisteDiv.appendChild(perdisteTexto);
-
-  // Añadir el <div> al div padre
-  contenedorDiv.insertBefore(perdisteDiv, playDiv); 
 }
 
 
@@ -449,11 +427,11 @@ function validarNombre(e){
   var textoIngresado = e.target.value;
   if(textoIngresado != ""){
     
-    if(textoIngresado.length < 7 || textoIngresado.indexOf(" ") == -1 ){
+    if(textoIngresado.length < 3){
       
       var spanNameNo = document.createElement(`span`);
     
-      spanNameNo.textContent = '❌'
+      spanNameNo.textContent = '❌ Debe escribir un nombre de al menos 3 caracteres'
       spanNameNo.style.color = `red`;
       spanNameNo.style.fontSize = `11px`;
       spanNameNo.style.display = `block`;
@@ -464,7 +442,7 @@ function validarNombre(e){
   
       nombreJugador = inputName.value;
       var spanNameOk = document.createElement(`span`);
-      spanNameOk.textContent = `✅Ok`;
+      spanNameOk.textContent = `✅ Perfecto, a jugar!`;
       spanNameOk.style.color = `green`;
       spanNameOk.style.fontSize = `12px`;
       spanNameOk.style.display = `block`;
@@ -491,6 +469,14 @@ function limpiarMensaje(e){
     divParenElement.removeChild(span);
   }
 
+}
+
+
+
+function closeModal(){
+  buttonCloseModal.style.display = "none";
+  buttonPlay.style.display = "block";
+  buttonPlay.textContent = "Reiniciar";
 }
 
 
