@@ -1,9 +1,14 @@
+var top10 = [];
+getTop10();
+
 var flotanteDiv = document.querySelector('.flotante');
 console.log(flotanteDiv);
 flotanteDiv.style.cursor = "default";
 
 
 var buttonCloseModal = document.getElementById("close-modal");
+var score = document.getElementById("score");
+console.log(score);
 
 
 
@@ -324,7 +329,34 @@ function perdiste(){
   clearTimeout(reset);
   puntaje = nivel - (tiempoAcumulado - tiempoUtilizado)/100;
   var fechaActual = new Date().toISOString().slice(0, 10);
-  //agregarFila(fechaActual, nombreJugador, puntaje);
+
+  var scoreJugador ={
+    fecha: fechaActual,
+    jugador: nombreJugador,
+    nivel: nivel,
+    score: puntaje
+  };
+
+  // Comprobamos si el puntaje realizado debe ingresar al top ten y lo colocamos en el lugar del ranking correspondiente
+  for(var i = 0; i < 10; i++){
+    top10ObjScore = top10[i];
+
+    if(top10ObjScore.score < puntaje){
+      var bajaUnaPosicion = top10ObjScore;
+      top10[i] = scoreJugador;
+  
+      var posicion = i + 1;
+      while(posicion < 10 ){
+        var objReemplazado = top10[posicion];
+        top10[posicion] = bajaUnaPosicion;
+  
+        bajaUnaPosicion = objReemplazado;
+        posicion ++;
+      }
+
+      break;
+    }
+  }
 
   setTimeout(function(){
     console.log("Perdiste")
@@ -334,11 +366,66 @@ function perdiste(){
     green.style.backgroundColor = "black";
   },200);
 
-
+  
   estado = false;
   nuevoJuego = true;
   modal.style.display = "block";
+  score.textContent = "Score: " + puntaje.toFixed(2);
+  actualizarTop10();
+  
+}
 
+// Funcion para obtener el top 10 de puntajes desde el localStorage
+function getTop10(){
+  /* localStorage.clear(); */
+
+  if(localStorage.length > 0){
+
+    for(var i = 0; i < 10; i++){
+      var key = " " + i
+      var scoreJSON = localStorage.getItem(key);
+      var objScore = JSON.parse(scoreJSON);
+      console.log(objScore);
+
+      top10.push(objScore);
+    }
+
+
+  }else{
+
+    for(var i = 0; i < 10; i++){
+      var key = " " + i;
+
+      var scoreJugador ={
+        fecha: "0000/00/00",
+        jugador: "Desconocido",
+        nivel: 0,
+        score: 0
+      };
+
+      var scoreJSON = JSON.stringify(scoreJugador);
+      localStorage.setItem(key, scoreJSON);
+      
+      top10.push(scoreJugador);
+
+    }
+
+  }
+  console.log(top10);
+
+}
+
+function actualizarTop10(){
+  console.log(top10);
+
+  for(var i = 0; i < 10; i++){
+    var score = top10[i];
+    var key = " " + i;
+    var scoreJSON = JSON.stringify(score);
+
+    localStorage.setItem(key, scoreJSON);
+
+  }
 }
 
 
@@ -373,32 +460,6 @@ function tiempoDisponible(){
 
 }
 
-
-// Cargar Ranking
-
-// Obtenemos una referencia a la tabla
-var table = document.getElementById("my-table");
-
-// Creamos una función para agregar una fila a la tabla
-function agregarFila(fecha, jugador, puntaje) {
-  var row = document.createElement("tr");
-
-  var celda1 = document.createElement("td");
-  celda1.textContent = fecha;
-  celda1.style.textAlign = "center"
-  row.appendChild(celda1);
-
-  var celda2 = document.createElement("td");
-  celda2.textContent = jugador;
-  row.appendChild(celda2);
-
-  var celda3 = document.createElement("td");
-  celda3.textContent = puntaje.toFixed(2);
-  celda3.style.textAlign = "center"
-  row.appendChild(celda3);
-
-  table.querySelector("tbody").appendChild(row);
-}
 
 
 
