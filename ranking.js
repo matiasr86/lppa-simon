@@ -1,7 +1,6 @@
 // Obtenemos una referencia a la tabla
 var table = document.getElementById("my-table");
 var bodyTable = document.getElementById("body");
-console.log(table)
 var top10 = [];
 getTop10();
 
@@ -16,19 +15,13 @@ function getTop10(){
     console.log(objScore)
     top10.push(objScore);
   
-    agregarFila(objScore.fecha, objScore.jugador, objScore.nivel, objScore.score);
+    addRow(objScore.date, objScore.player, objScore.level, objScore.score);
   }
-/*   console.log(top10);
-  agregarFila("fecha", "Matias", 5, 5.98); */
+
 }
 
-
-
-// Cargar Ranking
-
-
 // Creamos una función para agregar una fila a la tabla
-function agregarFila(fecha, jugador, nivel,  score) {
+function addRow(fecha, jugador, nivel,  score) {
   var row = document.createElement("tr");
 
   var celda1 = document.createElement("td");
@@ -41,7 +34,7 @@ function agregarFila(fecha, jugador, nivel,  score) {
   row.appendChild(celda2);
 
   var celda3 = document.createElement("td");
-  celda3.textContent = nivel.toFixed(2);
+  celda3.textContent = nivel;
   celda3.style.textAlign = "center"
   row.appendChild(celda3);
 

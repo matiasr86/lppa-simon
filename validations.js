@@ -1,6 +1,6 @@
-var nombre;
+var nameVar;
 var mail;
-var mensaje;
+var message;
 
 
  
@@ -8,14 +8,14 @@ var mensaje;
 var inputName = document.getElementById('nombre');
 var divName = inputName.parentNode.parentNode;
 
-inputName.addEventListener('blur', validarNombre)
+inputName.addEventListener('blur', validName)
 inputName.addEventListener('focus', limpiarMensaje)
 
-function validarNombre(e){
-  var textoIngresado = e.target.value;
-  if(textoIngresado != ""){
+function validName(e){
+  var textIn = e.target.value;
+  if(textIn != ""){
     
-    if(textoIngresado.length < 7 || textoIngresado.indexOf(" ") == -1 ){
+    if(textIn.length < 7 || textIn.indexOf(" ") == -1 ){
       
       var spanNameNo = document.createElement(`span`);
     
@@ -24,7 +24,7 @@ function validarNombre(e){
       spanNameNo.style.fontSize = `11px`;
       spanNameNo.style.display = `block`;
       divName.appendChild(spanNameNo);
-      nombre = false;
+      nameVar = false;
     }
     else{
   
@@ -35,18 +35,19 @@ function validarNombre(e){
       spanNameOk.style.fontSize = `12px`;
       spanNameOk.style.display = `block`;
       divName.appendChild(spanNameOk);
-      nombre = true;
+      nameVar = true;
     }
 
   }
   else{
-    nombre = false;
+    nameVar = false;
   }
 }
 
 // Validar el mail
-var inputMail = document.getElementById(`mail`);
+var inputMail = document.getElementById(`email`);
 var divMail = inputMail.parentNode.parentNode;
+console.log(divMail)
 
 inputMail.addEventListener('blur', validarMail);
 inputMail.addEventListener('focus', limpiarMensaje);
@@ -93,10 +94,10 @@ inputMessage.addEventListener('blur', validarMessage)
 inputMessage.addEventListener('focus', limpiarMensaje)
 
 function validarMessage(e){
-  var textoIngresado = e.target.value;
-  if(textoIngresado != ""){
+  var textIn = e.target.value;
+  if(textIn != ""){
     
-    if(textoIngresado.length < 5){
+    if(textIn.length < 5){
       
       var spanMessageNo = document.createElement(`span`);
     
@@ -105,7 +106,7 @@ function validarMessage(e){
       spanMessageNo.style.fontSize = `11px`;
       spanMessageNo.style.display = `block`;
       divMessage.appendChild(spanMessageNo);
-      mensaje = false;
+      message = false;
     }
     else{
   
@@ -116,12 +117,12 @@ function validarMessage(e){
       spanMessageOk.style.fontSize = `12px`;
       spanMessageOk.style.display = `block`;
       divMessage.appendChild(spanMessageOk);
-      mensaje = true;
+      message = true;
     }
 
   }
   else{
-    mensaje = false;
+    message = false;
   }
 }
 
@@ -138,8 +139,5 @@ function limpiarMensaje(e){
     divParenElement.removeChild(span);
   }
 
-  inputName = document.getElementById('nombre');
-  nuevoTitulo = hola + inputName.value;
-  titulo.textContent = nuevoTitulo;
 
 }

@@ -1,16 +1,16 @@
+// Declaramos el array donde vamos a guardar el top 10 y traemos del localStorage el top 10
 var top10 = [];
 getTop10();
+
+// Guardamos en variables los elementos del DOM que vamos a manipular
 
 var flotanteDiv = document.querySelector('.flotante');
 console.log(flotanteDiv);
 flotanteDiv.style.cursor = "default";
 
-
 var buttonCloseModal = document.getElementById("close-modal");
-var score = document.getElementById("score");
+var scoreElement = document.getElementById("score");
 console.log(score);
-
-
 
 
 // Rojo es el numero 1
@@ -24,49 +24,61 @@ var yellow = document.getElementById("yellow");
 var green = document.getElementById("green");
 
 var contenedorDiv = document.querySelector('.contenedor');
-var estadoDiv = document.querySelector('.estado');
-var tiempoDiv = estadoDiv.children[1];
-var tituloTiempo = tiempoDiv.querySelector('h2');
-
+var stateDiv = document.querySelector('.estado');
+var timeDiv = stateDiv.children[1];
+var titleTime = timeDiv.querySelector('h2');
 var modal = document.querySelector('.modal');
-var perdisteDiv = document.createElement('div');
 
 
-var puntajeDiv = estadoDiv.children[0];
-var tituloPuntaje = puntajeDiv.querySelector('h2');
-console.log(tituloTiempo.textContent)
+var levelDiv = stateDiv.children[0];
+var titleLevel = levelDiv.querySelector('h2');
+console.log(titleLevel)
 
 
+// Eventos 
+var buttonPlay = document.getElementById("play");
+buttonPlay.addEventListener('click', start);
 
-var secuenciaPrincipal = [];
-var secuenciaJugador = [];
-var nombreJugador;
-var nombre= false;
-var nivel = 0;
-var puntaje= 0;
-var contador = 0;
-var estado = false;
-var nuevoJuego = true;
-var tiempo = 3;
-var tiempoAcumulado = 3;
-var temporizador;
+buttonCloseModal.addEventListener('click', closeModal);
+
+red.addEventListener('click', checkSecuencia);
+blue.addEventListener('click', checkSecuencia);
+yellow.addEventListener('click', checkSecuencia);
+green.addEventListener('click', checkSecuencia);
+
+// Inicializamos las variables globales que necesitaremos 
+
+var sequenceMain = [];
+var sequencePlayer = [];
+var countColorOk = 0;
+var namePlayer;
+var nameVar = false;
+var level = 0;
+var score = 0;
+var count = 0;
+var state = false;
+var newGame = true;
+var time = 3;
+var timeAcumulado = 3;
+var temp;
 var reset;
 var timeEnableplay= 0;
-var tiempoUtilizado = 0;
+var timeUtilizado = 0;
 
-function restablecerVariables(){
-  perdisteDiv.remove();
-  tituloPuntaje.textContent = "Nivel: 0";
-  secuenciaPrincipal = [];
-  secuenciaJugador = [];
-  puntaje = 0;
-  nivel= 0;
-  contador = 0;
-  estado = false;
-  nuevoJuejo = false;
-  tiempo = 3;
-  tiempoAcumulado = 3;
-  tiempoUtilizado = 0;
+// Funcion para resetear los valores de las variables al reiniciar el juego
+function resetVars(){
+  titleLevel.textContent = "Nivel: 0";
+  sequenceMain = [];
+  sequencePlayer = [];
+  countColorOk = 0;
+  score = 0;
+  level= 0;
+  count = 0;
+  state = false;
+  newGame = false;
+  time = 3;
+  timeAcumulado = 3;
+  timeUtilizado = 0;
 
   red.style.backgroundColor = 'rgb(100, 0, 0)';
   red.style.border = '8px solid rgb(48, 46, 46)';
@@ -82,91 +94,69 @@ function restablecerVariables(){
   
 }
 
-
-
-
-function obtenerNumeroAleatorio() {
-  var numeroAleatorio = Math.floor(Math.random() * 4) + 1;
-  return numeroAleatorio;
+// Funcion para optener un valor random para incorporar a la secuencia principal
+function getNumberRandom() {
+  var numberRandom = Math.floor(Math.random() * 4) + 1;
+  return numberRandom;
 }
 
-
-
-// Eventos 
-var buttonPlay = document.getElementById("play");
-buttonPlay.addEventListener('click', start);
-
-buttonCloseModal.addEventListener('click', closeModal);
-
-red.addEventListener('click', checkSecuencia);
-blue.addEventListener('click', checkSecuencia);
-yellow.addEventListener('click', checkSecuencia);
-green.addEventListener('click', checkSecuencia);
-
-
+// Iniciamos el juego 
 function start(e){
   // Para evitar que recargue la pagina
   e.preventDefault();
 
-  if(nombre){
-    if(nuevoJuego){
-      restablecerVariables();
+  if(nameVar){
+    if(newGame){
+      resetVars();
     }
     buttonPlay.style.display = "none";
     play();
     
   }else{
+    // si el jugador no coloca el nombre 
     var spanNameNo = document.createElement(`span`);
     spanNameNo.textContent = '❌ Debe escribir un nombre de al menos 3 caracteres';
     spanNameNo.style.color = `red`;
     spanNameNo.style.fontSize = `11px`;
     spanNameNo.style.display = `block`;
     divName.insertBefore(spanNameNo, divName.children[2]);
-    nombre = false;
+    nameVar = false;
   }
 }
 
 function play(){
-  tituloTiempo.textContent = 'Recordar...';
-  var numAleatorio = obtenerNumeroAleatorio();
-  secuenciaPrincipal.push(numAleatorio);
+  titleTime.textContent = 'Recordar...';
+  var numRan = getNumberRandom();
+  sequenceMain.push(numRan);
 
-  console.log(secuenciaPrincipal)
+  // Ejecutamos la secuencia
+  for(var i = 0; i<= sequenceMain.length; i++){
+    var wait = (i * 1500);
+    ejecutar(sequenceMain[i], wait);
+    if(i == sequenceMain.length){
 
-  for(var i = 0; i<= secuenciaPrincipal.length; i++){
-    //await delay(1000);
-    var espera = (i * 1500);
-    ejecutar(secuenciaPrincipal[i], espera);
+    }
   }
-  contador=0;
-  estado = true;
-  //await delay(espera);
+  count = 0;
 
   setTimeout(function(){
-    tiempoDisponible();
-  }, espera);
+    timeAvailable();
+    state = true; 
+  }, wait);
 
-  
 }
-
-
-
-/* function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-} */
 
 
 function ejecutar(num, seg) {
-  //await delay(seg); // Esperar x segundos
+
   setTimeout(function(){
-    cambioColor(num);
+    changeColor(num);
 
   }, seg);
-  //setTimeout(cambioColor(num), 10000);
-  //cambioColor(num)
+
 }
 
-function cambioColor(num){
+function changeColor(num){
   
   console.log("Cambio color");
   switch (num) {
@@ -174,49 +164,41 @@ function cambioColor(num){
       // Código a ejecutar si opcion es igual a 1
       red.style.backgroundColor = "red";
       red.style.border = '4px solid white';
-      //await delay(500);
-      reset = setTimeout(function(){
-        restablecer()
+      resetTime = setTimeout(function(){
+        reset()
       }, 1000);
-      //setTimeout(restablecer(), 1000);
       break;
 
     case 2:
       // Código a ejecutar si opcion es igual a 2
       blue.style.backgroundColor = "blue";
       blue.style.border = '4px solid white';
-      //await delay(500);
-      reset = setTimeout(function(){
-        restablecer()
+      resetTime = setTimeout(function(){
+      reset()
       }, 1000);
-      //setTimeout(restablecer(), 1000);
       break;
 
     case 3:
       // Código a ejecutar si opcion es igual a 3
       yellow.style.backgroundColor = 'rgb(255, 255, 0)';
       yellow.style.border = '4px solid white';
-      //await delay(500);
-      reset = setTimeout(function(){
-        restablecer()
+      resetTime = setTimeout(function(){
+      reset()
       }, 1000);
-      //setTimeout(restablecer(), 1000);
       break;
 
     case 4:
       green.style.backgroundColor = 'rgb(0, 255, 0)';
       green.style.border = '4px solid white';
-      //await delay(500);
-      reset = setTimeout(function(){
-        restablecer()
+      resetTime = setTimeout(function(){
+      reset()
       }, 1000);
-      //setTimeout(restablecer(), 1000);
       break;
   }
 }
 
 
-function restablecer(){
+function reset(){
   console.log("Reestablecer");
   //await delay(500);
 
@@ -239,10 +221,11 @@ function restablecer(){
   
 }
 
+// Funcion para chequear si la secuencia que el jugador va ingresando es correcta
 function checkSecuencia(e){
     // Para evitar que recargue la pagina
     e.preventDefault();
-    if(!estado){
+    if(!state){
       
     }else{
       var divId = e.target.id;
@@ -252,65 +235,56 @@ function checkSecuencia(e){
         color = 1;
         red.style.backgroundColor = "red";
         red.style.border = '4px solid white';
-        //await delay(100);
         setTimeout(function(){
-          restablecer();
+          reset();
         },100);
-/*         red.style.backgroundColor = 'rgb(100, 0, 0)';
-        red.style.border = '4px solid rgb(48, 46, 46)'; */
         
       };
       if(divId == "blue"){
         color = 2;
         blue.style.backgroundColor = "blue";
         blue.style.border = '4px solid white';
-        //await delay(100);
         setTimeout(function(){
-          restablecer();
+          reset();
         },100);
-/*         blue.style.backgroundColor = 'rgb(0, 0, 100)';
-        blue.style.border = '4px solid rgb(48, 46, 46)'; */
+
 
       };
       if(divId == "yellow"){
         color = 3;
         yellow.style.backgroundColor = 'rgb(255, 255, 0)';
         yellow.style.border = '4px solid white';
-        //await delay(100);
         setTimeout(function(){
-          restablecer();
+          reset();
         },100);
-/*         yellow.style.backgroundColor = 'rgb(204, 204, 0)';
-        yellow.style.border = '4px solid rgb(48, 46, 46)'; */
+
       };
       if(divId == "green"){
         color = 4;
         green.style.backgroundColor = 'rgb(0, 255, 0)';
         green.style.border = '4px solid white';
-        //await delay(100);
         setTimeout(function(){
-          restablecer();
+          reset();
         },100);
-/*         green.style.backgroundColor = 'rgb(0, 80, 0)';
-        green.style.border = '4px solid rgb(48, 46, 46)'; */
+
       }; 
   
 
-      if(secuenciaPrincipal[contador] != color){
-        perdiste();
+      if(sequenceMain[count] != color){
+        youLose();
       }
       else{
-        contador++;
+        count++;
+        countColorOk++;
     
-        if (contador == secuenciaPrincipal.length){
-          tiempoUtilizado = tiempoUtilizado + (tiempo - timeEnableplay);
-          nivel +=1;
-          estado = false;
-          clearTimeout(temporizador);
-          //await delay(1000);
-          tituloPuntaje.textContent = "Nivel: " + contador;
-          tiempo += 0.5;
-          tiempoAcumulado += tiempo;
+        if (count == sequenceMain.length){
+          timeUtilizado = timeUtilizado + (time - timeEnableplay);
+          level +=1;
+          state = false;
+          clearTimeout(temp);
+          titleLevel.textContent = "Nivel: " + level;
+          time += 0.5;
+          timeAcumulado += time;
           setTimeout(function(){
             play();
           },1000);
@@ -323,25 +297,24 @@ function checkSecuencia(e){
 
 }
 
-
-function perdiste(){
-  clearInterval(temporizador);
+function youLose(){
+  clearInterval(temp);
   clearTimeout(reset);
-  puntaje = nivel - (tiempoAcumulado - tiempoUtilizado)/100;
-  var fechaActual = new Date().toISOString().slice(0, 10);
+  score = countColorOk - (timeAcumulado - timeUtilizado)/100;
+  var dateNow = new Date().toISOString().slice(0, 10);
 
   var scoreJugador ={
-    fecha: fechaActual,
-    jugador: nombreJugador,
-    nivel: nivel,
-    score: puntaje
+    date: dateNow,
+    player: namePlayer,
+    level: level,
+    score: score
   };
 
   // Comprobamos si el puntaje realizado debe ingresar al top ten y lo colocamos en el lugar del ranking correspondiente
   for(var i = 0; i < 10; i++){
     top10ObjScore = top10[i];
 
-    if(top10ObjScore.score < puntaje){
+    if(top10ObjScore.score < score){
       var bajaUnaPosicion = top10ObjScore;
       top10[i] = scoreJugador;
   
@@ -367,11 +340,13 @@ function perdiste(){
   },200);
 
   
-  estado = false;
-  nuevoJuego = true;
+  state = false;
+  newGame = true;
   modal.style.display = "block";
-  score.textContent = "Score: " + puntaje.toFixed(2);
-  actualizarTop10();
+  scoreElement.textContent = "Score: " + score.toFixed(2);
+
+  // Actualizamos el localStorage
+  updateTop10();
   
 }
 
@@ -396,17 +371,17 @@ function getTop10(){
     for(var i = 0; i < 10; i++){
       var key = " " + i;
 
-      var scoreJugador ={
-        fecha: "0000/00/00",
-        jugador: "Desconocido",
-        nivel: 0,
+      var scorePlayer ={
+        date: "0000/00/00",
+        player: "Desconocido",
+        level: 0,
         score: 0
       };
 
-      var scoreJSON = JSON.stringify(scoreJugador);
+      var scoreJSON = JSON.stringify(scorePlayer);
       localStorage.setItem(key, scoreJSON);
       
-      top10.push(scoreJugador);
+      top10.push(scorePlayer);
 
     }
 
@@ -415,7 +390,8 @@ function getTop10(){
 
 }
 
-function actualizarTop10(){
+// Funcion para actualizar el localStorage con los mejores 10 score
+function updateTop10(){
   console.log(top10);
 
   for(var i = 0; i < 10; i++){
@@ -428,31 +404,26 @@ function actualizarTop10(){
   }
 }
 
+// Temporizador 
+function timeAvailable(){
 
-
-
-function tiempoDisponible(){
-
-  timeEnableplay = tiempo;
-  var tiempoDisponibleWhile = tiempo;
-  var segundos = 1000;
-  tituloTiempo.textContent = 'Tiempo: ' + timeEnableplay;
+  timeEnableplay = time;
+  titleTime.textContent = 'Tiempo: ' + timeEnableplay;
 
   setTimeout(function(){
 
-    temporizador;
+    temp;
 
   },1000);
 
-  temporizador = setInterval(function(){
+  temp = setInterval(function(){
     timeEnableplay = timeEnableplay - 0.1;
-    tituloTiempo.textContent = 'Tiempo: ' + timeEnableplay.toFixed(2);
+    titleTime.textContent = 'Tiempo: ' + timeEnableplay.toFixed(2);
     console.log("set time while")
-    if(timeEnableplay <= 0 && estado){
-      tituloTiempo.textContent = 'Tiempo: 0';
-      tiempoUtilizado = tiempoUtilizado + (tiempo - timeEnableplay);
-      perdiste();
-      //clearInterval(temporizador);
+    if(timeEnableplay <= 0 && state){
+      titleTime.textContent = 'Tiempo: 0';
+      timeUtilizado = timeUtilizado + (time - timeEnableplay);
+      youLose();
       return;
     }
   }, 100);
@@ -481,10 +452,10 @@ var divName = inputName.parentNode;
 console.log(divName);
 
 // Eventos
-inputName.addEventListener('blur', validarNombre)
-inputName.addEventListener('focus', limpiarMensaje)
+inputName.addEventListener('blur', validName)
+inputName.addEventListener('focus', clearMessage)
 
-function validarNombre(e){
+function validName(e){
   var textoIngresado = e.target.value;
   if(textoIngresado != ""){
     
@@ -497,30 +468,30 @@ function validarNombre(e){
       spanNameNo.style.fontSize = `11px`;
       spanNameNo.style.display = `block`;
       divName.insertBefore(spanNameNo, divName.children[2]);
-      nombre = false;
+      nameVar = false;
     }
     else{
   
-      nombreJugador = inputName.value;
+      namePlayer = inputName.value;
       var spanNameOk = document.createElement(`span`);
       spanNameOk.textContent = `✅ Perfecto, a jugar!`;
       spanNameOk.style.color = `green`;
       spanNameOk.style.fontSize = `12px`;
       spanNameOk.style.display = `block`;
       divName.insertBefore(spanNameOk, divName.children[2]);
-      nombre = true;
+      nameVar = true;
     }
 
   }
   else{
-    nombre = false;
+    nameVar = false;
   }
 }
 
 
 // Funcion para limpiar todos los mensajes de validación una vez el usuario vuelve a editar el input
 
-function limpiarMensaje(e){
+function clearMessage(e){
   var elementEvent = e.target;
   var divParenElement = elementEvent.parentNode; 
 
