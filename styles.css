@@ -79,13 +79,13 @@ button{
 }
 
 
-.contenedor{
+.container{
   align-items: center;
 }
 
 
 
-.juego{
+.game{
   border-radius: 5px;
   padding: 25px;
   width: 450px;
@@ -105,13 +105,13 @@ input{
   width: 400px;
 }
 
-.estado{
+.state{
   width: 400px;
   background-color: #ff6122;
 
 }
 
-.estado div{
+.state div{
   color: white;
   width: 200px;
   text-align: center;

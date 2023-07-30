@@ -23,8 +23,8 @@ var blue = document.getElementById("blue");
 var yellow = document.getElementById("yellow");
 var green = document.getElementById("green");
 
-var contenedorDiv = document.querySelector('.contenedor');
-var stateDiv = document.querySelector('.estado');
+//var contenedorDiv = document.querySelector('.container');
+var stateDiv = document.querySelector('.state');
 var timeDiv = stateDiv.children[1];
 var titleTime = timeDiv.querySelector('h2');
 var modal = document.querySelector('.modal');
@@ -65,6 +65,72 @@ var reset;
 var timeEnableplay= 0;
 var timeUtilizado = 0;
 
+
+
+// Funcion para obtener el top 10 de puntajes desde el localStorage
+function getTop10(){
+  /* localStorage.clear(); */
+  
+  if(localStorage.length > 0){
+    
+    for(var i = 0; i < 10; i++){
+      var key = " " + i
+      var scoreJSON = localStorage.getItem(key);
+      var objScore = JSON.parse(scoreJSON);
+      console.log(objScore);
+      
+      top10.push(objScore);
+    }
+    
+    
+  }else{
+    
+    for(var i = 0; i < 10; i++){
+      var key = " " + i;
+      
+      var scorePlayer ={
+        date: "0000-00-00",
+        player: "Sin Registro",
+        level: 0,
+        score: 0
+      };
+      
+      var scoreJSON = JSON.stringify(scorePlayer);
+      localStorage.setItem(key, scoreJSON);
+      
+      top10.push(scorePlayer);
+      
+    }
+    
+  }
+  console.log(top10);
+  
+}
+
+// Iniciamos el juego 
+function start(e){
+  // Para evitar que recargue la pagina
+  e.preventDefault();
+  
+  if(nameVar){
+    if(newGame){
+      resetVars();
+    }
+    buttonPlay.style.display = "none";
+    play();
+    
+  }else{
+    // si el jugador no coloca el nombre 
+    var spanNameNo = document.createElement(`span`);
+    spanNameNo.textContent = '❌ Debe escribir un nombre de al menos 3 caracteres';
+    spanNameNo.style.color = `red`;
+    spanNameNo.style.fontSize = `11px`;
+    spanNameNo.style.display = `block`;
+    divName.insertBefore(spanNameNo, divName.children[2]);
+    nameVar = false;
+  }
+}
+
 // Funcion para resetear los valores de las variables al reiniciar el juego
 function resetVars(){
   titleLevel.textContent = "Nivel: 0";
@@ -100,62 +166,68 @@ function getNumberRandom() {
   return numberRandom;
 }
 
-// Iniciamos el juego 
-function start(e){
-  // Para evitar que recargue la pagina
-  e.preventDefault();
-
-  if(nameVar){
-    if(newGame){
-      resetVars();
-    }
-    buttonPlay.style.display = "none";
-    play();
-    
-  }else{
-    // si el jugador no coloca el nombre 
-    var spanNameNo = document.createElement(`span`);
-    spanNameNo.textContent = '❌ Debe escribir un nombre de al menos 3 caracteres';
-    spanNameNo.style.color = `red`;
-    spanNameNo.style.fontSize = `11px`;
-    spanNameNo.style.display = `block`;
-    divName.insertBefore(spanNameNo, divName.children[2]);
-    nameVar = false;
-  }
-}
-
+// Iniciamos el juego
 function play(){
   titleTime.textContent = 'Recordar...';
   var numRan = getNumberRandom();
   sequenceMain.push(numRan);
-
+  
   // Ejecutamos la secuencia
   for(var i = 0; i<= sequenceMain.length; i++){
     var wait = (i * 1500);
     ejecutar(sequenceMain[i], wait);
     if(i == sequenceMain.length){
-
+      
     }
   }
   count = 0;
-
+  
   setTimeout(function(){
     timeAvailable();
     state = true; 
   }, wait);
-
+  
 }
 
+// Temporizador 
+function timeAvailable(){
 
+  timeEnableplay = time;
+  titleTime.textContent = 'Tiempo: ' + timeEnableplay;
+
+  setTimeout(function(){
+
+    temp;
+
+  },1000);
+
+  temp = setInterval(function(){
+    timeEnableplay = timeEnableplay - 0.1;
+    titleTime.textContent = 'Tiempo: ' + timeEnableplay.toFixed(2);
+    console.log("set time while")
+    if(timeEnableplay <= 0 && state){
+      titleTime.textContent = 'Tiempo: 0';
+      timeUtilizado = timeUtilizado + (time - timeEnableplay);
+      youLose();
+      return;
+    }
+  }, 100);
+
+  
+}
+
+// Se invoca a la ejecucion de la secuencia 
 function ejecutar(num, seg) {
 
   setTimeout(function(){
     changeColor(num);
-
+    
   }, seg);
-
+  
 }
 
+
+// Funcion que cambia la intensidad de los colores 
 function changeColor(num){
   
   console.log("Cambio color");
@@ -188,6 +260,7 @@ function changeColor(num){
       break;
 
     case 4:
+      // Código a ejecutar si opcion es igual a 4
       green.style.backgroundColor = 'rgb(0, 255, 0)';
       green.style.border = '4px solid white';
       resetTime = setTimeout(function(){
@@ -197,11 +270,9 @@ function changeColor(num){
   }
 }
 
-
+// Funcion para reestablecer los colores originales
 function reset(){
   console.log("Reestablecer");
-  //await delay(500);
-
 
     red.style.backgroundColor = 'rgb(100, 0, 0)';
     red.style.border = '8px solid rgb(48, 46, 46)';
@@ -296,41 +367,41 @@ function checkSecuencia(e){
     }
 
 }
-
+  
 function youLose(){
   clearInterval(temp);
   clearTimeout(reset);
   score = countColorOk - (timeAcumulado - timeUtilizado)/100;
   var dateNow = new Date().toISOString().slice(0, 10);
-
-  var scoreJugador ={
-    date: dateNow,
-    player: namePlayer,
-    level: level,
-    score: score
+    
+  var scoreJugador = {
+  date: dateNow,
+  player: namePlayer,
+  level: level,
+  score: score
   };
-
+    
   // Comprobamos si el puntaje realizado debe ingresar al top ten y lo colocamos en el lugar del ranking correspondiente
   for(var i = 0; i < 10; i++){
     top10ObjScore = top10[i];
-
+      
     if(top10ObjScore.score < score){
       var bajaUnaPosicion = top10ObjScore;
       top10[i] = scoreJugador;
   
       var posicion = i + 1;
       while(posicion < 10 ){
-        var objReemplazado = top10[posicion];
-        top10[posicion] = bajaUnaPosicion;
-  
-        bajaUnaPosicion = objReemplazado;
-        posicion ++;
+      var objReemplazado = top10[posicion];
+      top10[posicion] = bajaUnaPosicion;
+        
+      bajaUnaPosicion = objReemplazado;
+      posicion ++;
       }
-
+      
       break;
     }
   }
-
+  
   setTimeout(function(){
     console.log("Perdiste")
     red.style.backgroundColor = "black";
@@ -338,56 +409,16 @@ function youLose(){
     yellow.style.backgroundColor = "black";
     green.style.backgroundColor = "black";
   },200);
-
+  
   
   state = false;
   newGame = true;
   modal.style.display = "block";
   scoreElement.textContent = "Score: " + score.toFixed(2);
-
+  
   // Actualizamos el localStorage
   updateTop10();
   
-}
-
-// Funcion para obtener el top 10 de puntajes desde el localStorage
-function getTop10(){
-  /* localStorage.clear(); */
-
-  if(localStorage.length > 0){
-
-    for(var i = 0; i < 10; i++){
-      var key = " " + i
-      var scoreJSON = localStorage.getItem(key);
-      var objScore = JSON.parse(scoreJSON);
-      console.log(objScore);
-
-      top10.push(objScore);
-    }
-
-
-  }else{
-
-    for(var i = 0; i < 10; i++){
-      var key = " " + i;
-
-      var scorePlayer ={
-        date: "0000/00/00",
-        player: "Desconocido",
-        level: 0,
-        score: 0
-      };
-
-      var scoreJSON = JSON.stringify(scorePlayer);
-      localStorage.setItem(key, scoreJSON);
-      
-      top10.push(scorePlayer);
-
-    }
-
-  }
-  console.log(top10);
-
 }
 
 // Funcion para actualizar el localStorage con los mejores 10 score
@@ -404,42 +435,14 @@ function updateTop10(){
   }
 }
 
-// Temporizador 
-function timeAvailable(){
 
-  timeEnableplay = time;
-  titleTime.textContent = 'Tiempo: ' + timeEnableplay;
-
-  setTimeout(function(){
-
-    temp;
-
-  },1000);
-
-  temp = setInterval(function(){
-    timeEnableplay = timeEnableplay - 0.1;
-    titleTime.textContent = 'Tiempo: ' + timeEnableplay.toFixed(2);
-    console.log("set time while")
-    if(timeEnableplay <= 0 && state){
-      titleTime.textContent = 'Tiempo: 0';
-      timeUtilizado = timeUtilizado + (time - timeEnableplay);
-      youLose();
-      return;
-    }
-  }, 100);
+function closeModal(){
+  buttonCloseModal.style.display = "none";
+  buttonPlay.style.display = "block";
+  buttonPlay.textContent = "Reiniciar";
 
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -505,11 +508,6 @@ function clearMessage(e){
 
 
 
-function closeModal(){
-  buttonCloseModal.style.display = "none";
-  buttonPlay.style.display = "block";
-  buttonPlay.textContent = "Reiniciar";
-}
 
 
 
