@@ -260,17 +260,15 @@ h2{
   }
 
 
-  
-  .estado div{
-    width: 150px;
-  }
-
-
-
-  .estado{
+  .state{
     width: 300px;
   
   }
+  
+  .state div{
+    width: 150px;
+  }
+
   
   .primary{
     width: 300px;
@@ -292,7 +290,7 @@ h2{
 
   
 
-  .juego{
+  .game{
 
     padding-left: 2px;
     padding-right: 2px;
