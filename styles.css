@@ -213,13 +213,13 @@ input{
   padding: 10px 20px;
   font-size: 20px;
   background-color: rgb(238, 107, 16);
-  color:rgb(48, 46, 46);
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 400px;
   font-weight: bold;
   margin-bottom: 5px;
+  color: rgb(255, 255, 255);
 }
 
 #ranking-button:hover {
