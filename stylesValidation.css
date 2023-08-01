@@ -1,5 +1,5 @@
 label{
-  color: greenyellow;
+  color: rgb(73, 238, 16);
 }
 
 .sec-form{
@@ -41,7 +41,7 @@ textarea{
   font-size: 20px;
   width: 100%;
   padding: 10px;
-  border: 2px solid #ff6122;
+  border: 2px solid rgb(238, 107, 16);
 }
 
 .send{
@@ -54,8 +54,8 @@ button{
   border-radius: 5px;
   font-size: 20px;
   font-weight: bold;
-  background-color: #ff6122;
-  color: white;
+  background-color: rgb(238, 107, 16);
+  color: rgb(255, 255, 255);
   width: 50%;
   height: auto;
 }
@@ -65,18 +65,11 @@ button{
 @media screen and (max-width: 700px) {
 
   .userData{
-
     min-width: 380px;
-
   }
 
   .message{
     width:380px;
-
   }
 
-  .send{
-
-  }
-
-  }
+}

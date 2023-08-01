@@ -1,5 +1,4 @@
 
-
 .ranking{
   padding: 25px;
   border-radius: 5px;
@@ -23,12 +22,12 @@
 }
 
 #my-table thead{
-  background-color: #ff6122;
+  background-color: rgb(238, 107, 16);
   width: 100%;
 }
 
 #my-table tbody{
-  color:greenyellow
+  color:rgb(73, 238, 16)
 }
 
 
@@ -41,11 +40,4 @@
   font-size: 15px;
   padding-left: 20px;
   justify-content: flex-start;
-}
-
-@media screen and (max-width: 600px) {
-
-
-
-
 }

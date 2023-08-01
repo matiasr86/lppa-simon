@@ -5,7 +5,7 @@
 }
 
 html{
-  color:white;
+  color:rgb(255, 255, 255);
   font-family: monospace;
   background-color: rgb(48, 46, 46);
 }
@@ -20,13 +20,12 @@ header{
   justify-content: space-between;
   padding-left: 20px;
   padding-right: 20px;
-  border-bottom: 1px solid #ff6122;
-
+  border-bottom: 1px solid rgb(238, 107, 16);
 }
 
 a{
   text-decoration: none;
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 
@@ -36,8 +35,6 @@ a{
   flex-direction: column;
   
 }
-
-
 
 .row-wrap{
   display: flex;
@@ -55,7 +52,7 @@ a{
 
 h1{
   font-size: 30px;
-  color: #ff6122;
+  color: rgb(238, 107, 16);
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-top: 20px;
@@ -67,7 +64,7 @@ h2{
 }
 
 h3{
-  color: chartreuse;
+  color: rgb(73, 238, 16);
 }
 
 .menu h4{
@@ -78,12 +75,9 @@ button{
   font-family: monospace;
 }
 
-
 .container{
   align-items: center;
 }
-
-
 
 .game{
   border-radius: 5px;
@@ -100,19 +94,19 @@ label{
 
 
 input{
-  border: 2px solid #ff6122;
+  border: 2px solid rgb(238, 107, 16);
   font-size: 20px;
   width: 400px;
 }
 
 .state{
   width: 400px;
-  background-color: #ff6122;
+  background-color: rgb(238, 107, 16);
 
 }
 
 .state div{
-  color: white;
+  color: rgb(255, 255, 255);
   width: 200px;
   text-align: center;
 }
@@ -129,8 +123,6 @@ input{
   background-color: rgb(48, 46, 46);
   border-radius: 15px;
   margin-bottom: 20px;
-
-  
 }
 
 .secondary{
@@ -168,7 +160,7 @@ input{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: black;
+  background-color: rgb(0, 0, 0);
   z-index: 1;
   border-radius: 50%; /* Establece el borde redondeado */
   width: 55%; /* Ajusta el ancho del div flotante */
@@ -178,9 +170,8 @@ input{
   border: 10px solid rgb(48, 46, 46);
 }
 
-
 .flotante h2{
-  color: greenyellow;
+  color: rgb(73, 238, 16);
   font-size: 30px;
   font-weight: bolder;
   cursor: pointer;
@@ -192,22 +183,22 @@ input{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: red;
+  background-color: rgb(255, 0, 0);
   padding: 20px;
   z-index: 1;
   width: 80%; /* Ajusta el ancho del div flotante */
   height: 50%; /* Ajusta la altura del div flotante */
   justify-content: center;
   align-items: center;
-  border: 4px solid white;
-  color: white;
+  border: 4px solid rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
   font-size: 30px;
   opacity: 0.8;
 }
 
 .modal h3{
   font-size: 15px;
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 
@@ -221,7 +212,7 @@ input{
   border: none;
   padding: 10px 20px;
   font-size: 20px;
-  background-color: #ff6122;
+  background-color: rgb(238, 107, 16);
   color:rgb(48, 46, 46);
   border-radius: 5px;
   cursor: pointer;
@@ -232,19 +223,17 @@ input{
 }
 
 #ranking-button:hover {
-  background-color: #eb8a0bee;
+  background-color: rgb(238, 107, 16);
 }
 footer{
   width: 100%;
   text-align: center;
 }
 
-
-
 @media screen and (max-width: 600px) {
-h2{
+  h2{
   font-size: medium;
-}
+  }
 
   body{
     padding-left: 5px;
@@ -259,7 +248,6 @@ h2{
     width: 300px;
   }
 
-
   .state{
     width: 300px;
   
@@ -268,7 +256,6 @@ h2{
   .state div{
     width: 150px;
   }
-
   
   .primary{
     width: 300px;
@@ -288,26 +275,17 @@ h2{
 
   }
 
-  
-
   .game{
-
     padding-left: 2px;
     padding-right: 2px;
     width: 300px;
   }
 
   .flotante h2{
-
     font-size: 20px;
   }
 
   #ranking-button {
-
     width: 300px;
-
   }
-
-
-
 }
