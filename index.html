@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juego Simon</title>
-  <link rel="stylesheet" href="./reset.css">
-  <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-  <header class="row-nowrap">
-    <div>
-      <a href="./index.html"><h1>Juego Simon</h1></a>
-    </div>
-    <nav class="row-nowrap menu">
-      <a href="./contacto.html"><h4>Contacto</h4></a>
-      <a href="https://github.com/matiasr86/lppa-simon" target="_blank"><h4>GitHub</h4></a>
-    </nav>
-  </header>
-  <main>
-    <div class="column-wrap container">
-      <div class="column-wrap game">
-        <label for="nombre">Ingrese su nombre completo</label>
-        <input type="text" id="nombre">
-        <div class="row-nowrap state">
-          <div><h2>Nivel: 0</h2></div>
-          <div><h2>Tiempo: 0</h2></div>
-        </div>
-        <div class="column-wrap  primary">
-          <div class="row-nowrap secondary">
-            <div id="red"></div>
-            <div id="blue"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego Simon</title>
+    <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="row-nowrap">
+      <div>
+        <a href="./index.html"><h1>Juego Simon</h1></a>
+      </div>
+      <nav class="row-nowrap menu">
+        <a href="./contacto.html"><h4>Contacto</h4></a>
+        <a href="https://github.com/matiasr86/lppa-simon" target="_blank"
+          ><h4>GitHub</h4></a
+        >
+      </nav>
+    </header>
+    <main>
+      <div class="column-wrap container">
+        <div class="column-wrap game">
+          <label for="nombre">Ingrese su nombre completo</label>
+          <input type="text" id="nombre" />
+          <div class="row-nowrap state">
+            <div><h2>Nivel: 0</h2></div>
+            <div><h2>Tiempo: 0</h2></div>
           </div>
-          <div class="row-nowrap secondary">
-            <div id="yellow"></div>
-            <div id="green"></div>
-          </div>
-          <div class="row-nowrap flotante">
-            <h2 id="play">Jugar</h2>
-          </div>
-          <div id="close-modal" class="column-wrap modal">
-            <h3>X</h3>
-            <div class="column-wrap">
-              <h2>You Lose</h2>
-              <h3 id="score">Score:</h3>
+          <div class="column-wrap primary">
+            <div class="row-nowrap secondary">
+              <div id="red"></div>
+              <div id="blue"></div>
+            </div>
+            <div class="row-nowrap secondary">
+              <div id="yellow"></div>
+              <div id="green"></div>
+            </div>
+            <div class="row-nowrap flotante">
+              <h2 id="play">Jugar</h2>
+            </div>
+            <div id="close-modal" class="column-wrap modal">
+              <h3>X</h3>
+              <div class="column-wrap">
+                <h2>You Lose</h2>
+                <h3 id="score">Score:</h3>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row-nowrap">
-          <a href="./ranking.html">
-            <button id="ranking-button">Ranking - Top 10</button>
-          </a>
+          <div class="row-nowrap">
+            <a href="./ranking.html">
+              <button id="ranking-button">Ranking - Top 10</button>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
-  <footer>
-    <h3>Tp Final Lppa - Matias Marinelli</h3>
-  </footer>
-  <script src="./logic.js"></script>
-</body>
+    </main>
+    <footer>
+      <h3>Tp Final Lppa - Matias Marinelli</h3>
+    </footer>
+    <script src="./logic.js"></script>
+  </body>
 </html>

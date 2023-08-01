@@ -1,62 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juego Simon</title>
-  <link rel="stylesheet" href="./reset.css">
-  <link rel="stylesheet" href="./styles.css">
-  <link rel="stylesheet" href="./stylesValidation.css">
-</head>
-<body>
-  <header class="row-nowrap">
-    <div>
-      <a href="./index.html"><h1>Juego Simon</h1></a>
-    </div>
-    <nav class="row-nowrap menu">
-      <a href="#"><h4>Contacto</h4></a>
-      <a href="https://github.com/matiasr86/lppa-simon" target="_blank"><h4>GitHub</h4></a>
-    </nav>
-  </header>
-  <main>
-    <section class="column-wrap sec-form">
-      <h2>Complete el siguiente formulario con sus datos</h2>
-      <form action="mailto:matiasr86@hotmail.com" method="post" enctype="text/plain" >
-        <div class="row-wrap form">
-          <div class="userData">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego Simon</title>
+    <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./stylesValidation.css" />
+  </head>
+  <body>
+    <header class="row-nowrap">
+      <div>
+        <a href="./index.html"><h1>Juego Simon</h1></a>
+      </div>
+      <nav class="row-nowrap menu">
+        <a href="#"><h4>Contacto</h4></a>
+        <a href="https://github.com/matiasr86/lppa-simon" target="_blank"
+          ><h4>GitHub</h4></a
+        >
+      </nav>
+    </header>
+    <main>
+      <section class="column-wrap sec-form">
+        <h2>Complete el siguiente formulario con sus datos</h2>
+        <form
+          action="mailto:matiasr86@hotmail.com"
+          method="post"
+          enctype="text/plain"
+        >
+          <div class="row-wrap form">
+            <div class="userData">
               <div>
                 <label for="nombre">Nombre y Apellido</label>
               </div>
               <div>
-                <input type="text" id="nombre" name="nombre" required >
+                <input type="text" id="nombre" name="nombre" required />
               </div>
-          </div>
-          <div class="userData">
-            <div>
-              <label for="email">E-mail</label>
             </div>
-            <div>
-              <input type="text" id="email" name="email" required>
+            <div class="userData">
+              <div>
+                <label for="email">E-mail</label>
+              </div>
+              <div>
+                <input type="text" id="email" name="email" required />
+              </div>
+            </div>
+            <div class="message">
+              <div>
+                <label for="message">Mensaje</label>
+              </div>
+              <div>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="8"
+                  cols="50"
+                  required
+                ></textarea>
+              </div>
+            </div>
+            <div class="send">
+              <button type="submit">Enviar</button>
             </div>
           </div>
-          <div class="message">
-            <div>
-              <label for="message">Mensaje</label>
-            </div>
-            <div>
-              <textarea id="message" name="message" rows="8" cols="50" required></textarea>
-            </div>
-          </div>
-          <div class="send">
-            <button type="submit">Enviar</button>
-          </div>
-        </div>   
-      </form>
-    </section>
-  </main>
-  <footer>
-    <h3>Tp Final Lppa - Matias Marinelli</h3>
-  </footer>
-  <script src="./validations.js"></script>
-</body>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <h3>Tp Final Lppa - Matias Marinelli</h3>
+    </footer>
+    <script src="./validations.js"></script>
+  </body>
 </html>
